@@ -1,0 +1,32 @@
+{
+    "App Configs": [
+        {
+            "Name": "Fish Bot Config",
+            "EnvVar": {
+                "FISH_APPLICATION_ID": "blank",
+                "FISH_AUTH": "blank",
+                "FISH_CHANNEL_ID": "blank",
+                "FISH_GUILD_ID": "blank",
+                "FISH_SESSION_ID": "blank",
+                "FISH_VERSION": "blank",
+                "FISH_ID": "blank"
+            }
+        },
+        {
+            "Name": "Mining Bot Config",
+            "EnvVar": {
+                "MINING_APPLICATION_ID": "blank",
+                "MINING_AUTH": "blank",
+                "MINING_CHANNEL_ID": "blank",
+                "MINING_GUILD_ID": "blank",
+                "MINING_SESSION_ID": "blank",
+                "MINING_VERSION": "blank",
+                "MINING_ID": "blank"
+            }
+        }
+    ],
+    "EnvVar": {
+        
+    },
+    "MiscVar" :  {}
+}
