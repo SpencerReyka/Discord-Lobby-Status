@@ -1,4 +1,4 @@
-from discord_layer import DiscordProxy
+from discord_proxy import DiscordProxy
 
 
 
@@ -13,6 +13,8 @@ class Status():
 
     async def run(self):
         await self.discord_proxy.set_up_discord_py()
+
+        await self.discord_proxy.retrieve_channels_from_discord_py()
         
         #self.guilds = self.discord_proxy.retrieve_users_guilds()
         #channels = self.bdiscord_proxyot.retrieve_channels(self.guilds[-1]["id"])

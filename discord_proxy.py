@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import discord
+from discord import VoiceChannel
 
 class DiscordProxy():
     def __init__(self):
@@ -48,8 +49,7 @@ class DiscordProxy():
         }
 
     async def set_up_discord_py(self):
-        intents = discord.Intents.default()
-        intents.guilds = True
+        intents = discord.Intents.all()
 
         self.client = discord.Client(intents=intents)
 
@@ -57,9 +57,35 @@ class DiscordProxy():
         async def on_ready():
             print(f'We have logged in as {self.client.user}')
             print(f'{self.client.user} has {self.client.guilds}')
+            print(f'{self.client.user} has {self.client.voice_clients}')
+            for guild in self.client.guilds:
+                print(f'{guild} has {guild.channels}')
+                for channel in guild.channels:
+                    if isinstance(channel, VoiceChannel):
+                        print(channel.members)
+            await self.client.close()
 
         await self.client.login(os.getenv('DISCORD_BOT_AUTH'))
 
+    async def retrieve_channels_from_discord_py(self):
+        guild = await self.client.fetch_guild(os.getenv('FIRDAY_DISC_ID'))
+
+        # print(self.client.voice_clients)
+        # channels = await guild.fetch_channels()
+        # print(channels)
+        # for channel in channels:
+        #     if channel.name == "horsey go neigh":
+        #         print(channel.members)
+        #         fleshed_channel = await guild.fetch_channel(channel.id)
+
+        #         print(fleshed_channel.members)
+            #chan = await client.get_channel(channel.id) #gets the channel you want to get the list from
+
+            #print(chan.members)
+        
+        await self.client.connect()
+
+        pass
 
     async def close(self):
         if self.client:
