@@ -5,13 +5,13 @@ import requests
 import asyncio
 from status import Status
 
-async def main():
+def main():
     print("Starting runner!")
     reader = Reader()
     reader.set_up_env()
 
     status = Status()
-    await status.run()
+    status.run()
 
 
     # r = requests.get(f'https://discord.com/api/v9/channels/1042344356520149004/messages?limit=5', headers=self.retrieve_message_headers)
@@ -26,7 +26,7 @@ async def main():
     # print(os.getenv('DISCORD_AUTH'))
     # client.run(os.getenv('DISCORD_AUTH'))
 
-    await status.close()
+    status.close()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()

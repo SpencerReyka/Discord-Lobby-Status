@@ -3,6 +3,7 @@ import json
 import os
 import discord
 from discord import VoiceChannel
+from discord.ext.commands import Bot 
 
 class DiscordProxy():
     def __init__(self):
@@ -48,10 +49,11 @@ class DiscordProxy():
             },
         }
 
-    async def set_up_discord_py(self):
+    def set_up_discord_py(self):
         intents = discord.Intents.all()
 
         self.client = discord.Client(intents=intents)
+        self.client.previous_lobby = None
 
         @self.client.event
         async def on_ready():
@@ -62,13 +64,38 @@ class DiscordProxy():
                 print(f'{guild} has {guild.channels}')
                 for channel in guild.channels:
                     if isinstance(channel, VoiceChannel):
+                        #if 
                         print(channel.members)
-            await self.client.close()
+            #await self.client.close()
 
-        await self.client.login(os.getenv('DISCORD_BOT_AUTH'))
+        # client = Bot(command_prefix="!")
 
-    async def retrieve_channels_from_discord_py(self):
-        guild = await self.client.fetch_guild(os.getenv('FIRDAY_DISC_ID'))
+        @self.client.event
+        async def on_voice_state_update(member, before, after):
+            print("spencer was in " + str(self.client.previous_lobby))
+            print(member)
+            print("========")
+            print(before)
+            print("========")
+            print(after)
+            # print(member.__dir__())
+            print(member.id)
+            if member.id == 152221474457911297:
+                print("this is spencer")
+                self.client.previous_lobby = after.channel.name # AACCCOUNT FOR TODO
+                
+
+
+            #await self.client.close()
+            # if before.voice.voice_channel is None and after.voice.voice_channel is not None:
+            #     for channel in before.server.channels:
+            #         if channel.name == 'general':
+            #             await client.send_message(channel, "Howdy")
+
+        #await self.client.login(os.getenv('DISCORD_BOT_AUTH'))
+
+    def retrieve_channels_from_discord_py(self):
+        # guild = await self.client.fetch_guild(os.getenv('FIRDAY_DISC_ID'))
 
         # print(self.client.voice_clients)
         # channels = await guild.fetch_channels()
@@ -83,14 +110,14 @@ class DiscordProxy():
 
             #print(chan.members)
         
-        await self.client.connect()
+        self.client.run(os.getenv('DISCORD_BOT_AUTH'))
 
         pass
 
-    async def close(self):
+    def close(self):
         if self.client:
             print("closing client")
-            await self.client.close()
+            self.client.close()
 
 
     def retrieve_messages(self):
